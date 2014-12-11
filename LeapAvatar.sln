@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HandTracking", "HandTracking\HandTracking.vcxproj", "{96E5278D-EAE9-4700-897E-94D72B4356A8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GripControl", "GripControl\GripControl.vcxproj", "{FA7804AE-FD46-409B-B6A3-4C14AEAB8E4C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MotionController", "MotionController\MotionController.vcxproj", "{407E8AD5-BB5B-41CC-9687-1839C62B5348}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96E5278D-EAE9-4700-897E-94D72B4356A8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96E5278D-EAE9-4700-897E-94D72B4356A8}.Debug|Win32.Build.0 = Debug|Win32
+		{96E5278D-EAE9-4700-897E-94D72B4356A8}.Release|Win32.ActiveCfg = Release|Win32
+		{96E5278D-EAE9-4700-897E-94D72B4356A8}.Release|Win32.Build.0 = Release|Win32
+		{FA7804AE-FD46-409B-B6A3-4C14AEAB8E4C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA7804AE-FD46-409B-B6A3-4C14AEAB8E4C}.Debug|Win32.Build.0 = Debug|Win32
+		{FA7804AE-FD46-409B-B6A3-4C14AEAB8E4C}.Release|Win32.ActiveCfg = Release|Win32
+		{FA7804AE-FD46-409B-B6A3-4C14AEAB8E4C}.Release|Win32.Build.0 = Release|Win32
+		{407E8AD5-BB5B-41CC-9687-1839C62B5348}.Debug|Win32.ActiveCfg = Debug|Win32
+		{407E8AD5-BB5B-41CC-9687-1839C62B5348}.Debug|Win32.Build.0 = Debug|Win32
+		{407E8AD5-BB5B-41CC-9687-1839C62B5348}.Release|Win32.ActiveCfg = Release|Win32
+		{407E8AD5-BB5B-41CC-9687-1839C62B5348}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

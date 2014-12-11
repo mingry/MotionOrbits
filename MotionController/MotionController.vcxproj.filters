@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="mathclass">
+      <UniqueIdentifier>{a573ed96-c9b1-4e89-93ab-b38c0b0ed286}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphSequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionCluster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseDistance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseIK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMotion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trackball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\math_def.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\matrix.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\matrixN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\optimize.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\position.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\QmApproximate.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\QmGeodesic.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\quater.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\smatrixN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\transf.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\transq.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\unit_vector.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\vector.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\vectorN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_bvhplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionCluster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PoseConstraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PoseData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PoseDistance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PoseIK.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMotion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_basketball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_bboy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_boxing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trackball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\addition.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\cross_product.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\dot_product.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\math_def.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrix.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrix_mul.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrixN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\optimize1.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\optimize2.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\position.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\QmApproximate.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\QmGeodesic.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\quater.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\scalar_div.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\scalar_mul.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\smatrixN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\subtraction.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\transf.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\transq.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\unit_vector.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\vector.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\vectorN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="main_graphbuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_graphplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

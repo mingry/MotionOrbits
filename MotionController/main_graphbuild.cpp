@@ -25,7 +25,7 @@
 #define PATH_GRAPH	"../data/b-boy/graph.txt"
 #define PATH_CYCLES	"../data/b-boy/cycle%d.txt"
 
-#define MIN_SEGMENT_LENGTH	10
+#define MIN_SEGMENT_LENGTH	20
 #define MAX_POSE_DISTANCE	3.0f
 
 
@@ -90,23 +90,19 @@ void startGraphBuilder( int* argcp, char** argv )
 	std::cout << "- # of nodes = " << (int)connected_graph.getNumNodes() << std::endl;
 	std::cout << "- # of edges = " << (int)connected_graph.getNumEdges() << std::endl << std::endl;
 
-	exportMotionGraph( &connected_graph );
-	
-	/*
-	MotionGraph connected_graph;
-	connected_graph.load( PATH_GRAPH );
-	*/
-
 	// (5) enumerate all elementary circuits from the leargest component
 	std::cout << "[5] cycle enumeration" << std::endl;
+	connected_graph.enumerateAllCycles();
+	connected_graph.sortCycles();
 
+	/*
 	std::vector< MotionGraph* > cycle_list;
 	enumerateCycles( &connected_graph, &cycle_list );
+	*/
 
 	// (6) export each circuit into a graph with the asceding order of its size
 	std::cout << "[6] exporting graph and cycles" << std::endl;
-
-	exportGraphCycles( &cycle_list );
+	connected_graph.save( PATH_GRAPH );
 
 	// (7) and later, merge circuits iteratively with the connectable paths from the original graph
 

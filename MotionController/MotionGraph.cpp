@@ -38,18 +38,18 @@ void MotionGraph::finalize()
 		Node* node = ( *itor_node ++ );
 		delete node;
 	}
+	node_list.clear();
+
 	std::vector< Edge* >::iterator itor_edge = edge_list.begin();
 	while( itor_edge != edge_list.end() )
 	{
 		Edge* edge = ( *itor_edge ++ );
 		delete edge;
 	}
-	std::vector< std::vector<Node*>* >::iterator itor_comp = component_list.begin();
-	while( itor_comp != component_list.end() )
-	{
-		std::vector< Node* >* comp = ( *itor_comp ++ );
-		delete comp;
-	}
+	edge_list.clear();
+
+	removeAllComponents();
+	removeAllCycles();
 }
 
 bool MotionGraph::load( std::string path )
@@ -119,6 +119,28 @@ bool MotionGraph::load( std::string path )
 			comp->push_back( node );
 		}
 	}
+
+	// cycle list
+	unsigned int num_cycles = 0, k;
+	is >> num_cycles;
+
+	for( k=0; k < num_cycles; k++ )
+	{
+		std::vector< unsigned int >* cycle = new std::vector< unsigned int >;
+		cycle_list.push_back( cycle );
+
+		unsigned int num_nodes = 0, n;
+		is >> num_nodes;
+
+		for( n=0; n < num_nodes; n++ )
+		{
+			unsigned int index = 0;
+			is >> index;
+
+			cycle->push_back( index );
+		}
+	}
+
 	is.close();
 
 	return true;
@@ -198,6 +220,30 @@ bool MotionGraph::save( std::string path )
 		}
 		os << std::endl;
 	}
+	os << std::endl;
+
+	// cycle list
+	unsigned int num_cycles = (unsigned int)cycle_list.size();
+	os << num_cycles << std::endl;
+
+	std::vector< std::vector<unsigned int>* >::iterator itor_cycle = cycle_list.begin();
+	while( itor_cycle != cycle_list.end() )
+	{
+		std::vector< unsigned int >* cycle = ( *itor_cycle ++ );
+
+		unsigned int num_nodes = (unsigned int)cycle->size();
+		os << num_nodes << std::endl;
+
+		std::vector< unsigned int >::iterator itor_n = cycle->begin();
+		while( itor_n != cycle->end() )
+		{
+			unsigned int index = ( *itor_n ++ );
+
+			os << index << " ";
+		}
+		os << std::endl;
+	}
+	os << std::endl;
 
 	os.close();
 
@@ -376,8 +422,21 @@ static bool sort_component( std::vector<MotionGraph::Node*>*& rh, std::vector<Mo
 	return ( (unsigned int)rh->size() > (unsigned int)lh->size() );
 }
 
+void MotionGraph::removeAllComponents()
+{
+	std::vector< std::vector<Node*>* >::iterator itor_c = component_list.begin();
+	while( itor_c != component_list.end() )
+	{
+		std::vector< Node* >* comp = ( *itor_c ++ );
+		delete comp;
+	}
+	component_list.clear();
+}
+
 void MotionGraph::decompose()
 {
+	removeAllComponents();
+
 	// 1. Prepare to depth first search with normal direction
 	std::vector< Node* >::iterator itor_node_init = node_list.begin();
 	while( itor_node_init != node_list.end() )
@@ -699,4 +758,168 @@ MotionGraph::Node* MotionGraph::dijkstraExtractMin()
 	dijkstra_Q.pop_back();
 
 	return n;
+}
+
+
+//
+void MotionGraph::OUTPUT_CYCLE( std::vector<unsigned int>& node_stack )
+{
+	std::cout << "- cycle[" << (int)cycle_list.size() << "]: # of nodes = " << (int)node_stack.size() << std::endl;
+
+	//
+	std::vector< unsigned int >* cycle = new std::vector< unsigned int >;
+	cycle_list.push_back( cycle );
+
+	std::vector< unsigned int >::iterator itor_n = node_stack.begin();
+	while( itor_n != node_stack.end() )
+	{
+		unsigned int i = ( *itor_n ++ );
+		cycle->push_back( i );
+	}
+}
+
+void MotionGraph::UNBLOCK( unsigned int u, AdjListT& B, std::vector<unsigned int>& node_stack, std::vector<unsigned int>& blocked )
+{
+	blocked[u] = false;
+
+	std::list< unsigned int >::iterator itor_w = B[u].begin();
+	while( itor_w != B[u].end() )
+	{
+		unsigned int w = ( *itor_w );
+		itor_w = B[u].erase( itor_w );
+
+		if( blocked[w] )
+		{
+			UNBLOCK( w, B, node_stack, blocked );
+		}
+	}
+}
+
+bool MotionGraph::CIRCUIT( unsigned int s, unsigned int v, AdjListT& A, AdjListT& B, std::vector<unsigned int>& node_stack, std::vector<unsigned int>& blocked )
+{
+    bool f = false;
+
+    node_stack.push_back(v);
+    blocked[v] = true;
+
+	std::list< unsigned int >::iterator itor_w = A[v].begin();
+	while( itor_w != A[v].end() )
+	{
+		unsigned int w = ( *itor_w ++ );
+
+		if( w == s )
+		{
+			OUTPUT_CYCLE( node_stack );
+			f = true;
+		}
+		else
+		{
+			 if( !blocked[w] )
+			 {
+				 if( CIRCUIT( s, w, A, B, node_stack, blocked ) )
+				 {
+					 f = true;
+				 }
+			 }
+		}
+	}
+
+	if( f )
+	{
+		UNBLOCK( v, B, node_stack, blocked );
+	}
+	else
+	{
+		itor_w = A[v].begin();
+		while( itor_w != A[v].end() )
+		{
+			unsigned int w = ( *itor_w ++ );
+
+			if( std::find( B[w].begin(), B[w].end(), v ) == B[w].end() )
+			{
+				B[w].push_back( v );
+			}
+		}
+	}
+
+	node_stack.pop_back();
+
+	return f;
+}
+
+void MotionGraph::removeAllCycles()
+{
+	std::vector< std::vector<unsigned int>* >::iterator itor_c = cycle_list.begin();
+	while( itor_c != cycle_list.end() )
+	{
+		std::vector<unsigned int>* cycle = ( *itor_c ++ );
+		delete cycle;
+	}
+	cycle_list.clear();
+}
+
+inline static bool sort_cycle( std::vector<unsigned int>* lhs, std::vector<unsigned int>* rhs )
+{
+	return ( lhs->size() < rhs->size() );
+}
+
+void MotionGraph::sortCycles()
+{
+	std::sort( cycle_list.begin(), cycle_list.end(), sort_cycle );
+}
+
+// this method assumes that the graph is a strongly connected component and doesn't include any nodes whose edges point to themselves
+void MotionGraph::enumerateAllCycles()
+{
+	removeAllCycles();
+
+	//
+	AdjListT A, B;
+	std::vector<unsigned int> node_stack;
+	std::vector<unsigned int> blocked;
+
+	unsigned int num_nodes = this->getNumNodes(), i, j;
+
+    A.resize( num_nodes );
+    B.resize( num_nodes );
+    blocked.resize( num_nodes );
+
+	for( i=0; i < num_nodes; i++ )
+	{
+		MotionGraph::Node* node = this->getNode( i );
+		unsigned int u = i;
+
+		std::vector< MotionGraph::Edge* >* edges = node->getNextEdges();
+		unsigned int num_edges = (unsigned int)edges->size();
+
+		for( j=0; j < num_edges; j++ )
+		{
+			MotionGraph::Node* next_node = ( *edges )[j]->getToNode();
+			unsigned int v = this->getNodeIndex( next_node );
+
+			A.at( u ).push_back( v );
+		}
+
+		blocked[i] = false;
+	}
+
+	for( i=0; i < num_nodes; i++ )
+	{
+		std::cout << "(*) node[ " << i << "/" << num_nodes << "] is processed" << std::endl;
+
+		CIRCUIT( i, i, A, B, node_stack, blocked );
+
+		A[i].clear();
+
+		for( j=0; j < num_nodes; j++ )
+		{
+			A[j].remove( i );
+		}
+
+		for( j=0; j < num_nodes; j++ )
+		{
+			blocked[j] = false;
+			B[j].clear();
+		}
+	}
 }

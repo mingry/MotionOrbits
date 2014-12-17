@@ -108,6 +108,9 @@
     <ClInclude Include="..\mathclass\vectorN.h">
       <Filter>mathclass</Filter>
     </ClInclude>
+    <ClInclude Include="OrbitGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp">
@@ -243,6 +246,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main_graphplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_orbitbuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_orbitplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

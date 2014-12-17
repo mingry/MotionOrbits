@@ -4,9 +4,12 @@
 #include <map>
 #include <deque>
 #include <set>
+#include <list>
 
 #include "mathclass/position.h"
 #include "mathclass/quater.h"
+
+typedef std::vector< std::list<unsigned int> > AdjListT;
 
 class SkeletalMotion;
 
@@ -227,23 +230,10 @@ public:
 		{
 		}
 		
-		/*
-		inline void addSegment( unsigned int start_frame, unsigned int end_frame )
-		{
-			segment_list.push_back( std::make_pair(start_frame, end_frame) );
-		}
-		inline std::vector< std::pair<unsigned int,unsigned int> >* getSegments()
-		{
-			return &segment_list;
-		}
-		*/
-
 		inline Node* getFromNode()	{ return from_node; }
 		inline Node* getToNode()	{ return to_node; }
 
 	protected:
-		//std::vector< std::pair<unsigned int, unsigned int> >	segment_list;
-
 		Node* from_node;
 		Node* to_node;
 	};
@@ -257,10 +247,6 @@ public:
 	void initialize();
 	void finalize();
 
-	void decompose();
-	void dfsVisit( Node* node, unsigned int* step, std::vector<Node*>* forest=NULL );
-	void dfsVisitInverse( Node* node, unsigned int* step, std::vector<Node*>* forest=NULL );
-
 	Node* addNode( unsigned int type = MotionGraph::Node::Type::LOCAL );
 	Node* getNode( unsigned int index );
 	unsigned int getNodeIndex( Node* node );
@@ -271,6 +257,13 @@ public:
 	std::vector< Edge* >* findEdges( Node* from_node, Node* to_node );
 	bool removeEdges( Node* from_node, Node* to_node );
 	bool hasEdge( Edge* edge );
+
+	void decompose();	
+	void removeAllComponents();
+
+	void enumerateAllCycles();
+	void removeAllCycles();
+	void sortCycles();
 
 	bool findPath( Node* from_node, Node* to_node, std::deque< Node* >* path );
 
@@ -288,6 +281,7 @@ public:
 	inline unsigned int getNumNodes()		{ return (unsigned int)node_list.size(); }
 	inline unsigned int getNumEdges()		{ return (unsigned int)edge_list.size(); }
 	inline unsigned int getNumComponents()	{ return (unsigned int)component_list.size(); }
+	inline unsigned int getNumCycles()		{ return (unsigned int)cycle_list.size(); }
 
 	//
 	inline std::vector< Node* >* getComponent( unsigned int i )
@@ -299,9 +293,26 @@ public:
 		return NULL;
 	}
 
+	inline std::vector<unsigned int>* getCycle( unsigned int i )	
+	{ 
+		if( i < getNumCycles() )
+		{
+			return cycle_list[ i ];
+		}
+		return NULL;
+	}
+
 protected:
 	void removeEdge( Edge* edge );
 
+	void dfsVisit( Node* node, unsigned int* step, std::vector<Node*>* forest=NULL );
+	void dfsVisitInverse( Node* node, unsigned int* step, std::vector<Node*>* forest=NULL );
+
+	void OUTPUT_CYCLE( std::vector<unsigned int>& node_stack );
+	void UNBLOCK( unsigned int u, AdjListT& B, std::vector<unsigned int>& node_stack, std::vector<unsigned int>& blocked );
+	bool CIRCUIT( unsigned int s, unsigned int v, AdjListT& A, AdjListT& B, std::vector<unsigned int>& node_stack, std::vector<unsigned int>& blocked );
+
+	//
 	float	position_threshold;
 	float	orientation_threshold;
 
@@ -310,6 +321,8 @@ protected:
 	std::vector< std::vector<Node*>* >	component_list;
 
 	std::map< std::pair<Node*,Node*>, std::vector<Edge*>* >	edge_map;
+
+	std::vector< std::vector<unsigned int>* > cycle_list;
 
 	//
 	void dijkstraInit();

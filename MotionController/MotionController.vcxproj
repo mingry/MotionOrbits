@@ -101,6 +101,7 @@
     <ClInclude Include="MotionData.h" />
     <ClInclude Include="MotionEdit.h" />
     <ClInclude Include="MotionGraph.h" />
+    <ClInclude Include="OrbitGraph.h" />
     <ClInclude Include="PoseConstraint.h" />
     <ClInclude Include="PoseData.h" />
     <ClInclude Include="PoseDistance.h" />
@@ -141,10 +142,13 @@
     <ClCompile Include="main_bvhplay.cpp" />
     <ClCompile Include="main_graphbuild.cpp" />
     <ClCompile Include="main_graphplay.cpp" />
+    <ClCompile Include="main_orbitbuild.cpp" />
+    <ClCompile Include="main_orbitplay.cpp" />
     <ClCompile Include="MotionCluster.cpp" />
     <ClCompile Include="MotionData.cpp" />
     <ClCompile Include="MotionEdit.cpp" />
     <ClCompile Include="MotionGraph.cpp" />
+    <ClCompile Include="OrbitGraph.cpp" />
     <ClCompile Include="PoseConstraint.cpp" />
     <ClCompile Include="PoseData.cpp" />
     <ClCompile Include="PoseDistance.cpp" />

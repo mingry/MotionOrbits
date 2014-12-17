@@ -15,17 +15,12 @@
 
 #include "SkeletalMotion.h"
 #include "MotionData.h"
-#include "MotionEdit.h"
-#include "MotionCluster.h"
-#include "MotionGraph.h"
 #include "Skeleton.h"
 #include "Joint.h"
-
 #include "Human.h"
-#include "PoseConstraint.h"
-#include "PoseData.h"
-#include "PoseIK.h"
 
+#include "MotionGraph.h"
+#include "OrbitGraph.h"
 #include "Character.h"
 
 
@@ -34,9 +29,7 @@
 //#define PATH_BVH	"../data/basketball/shooting.bvh"
 
 #define PATH_GRAPH	"../data/b-boy/graph.txt"
-#define PATH_CYCLES	"../data/b-boy/cycle%d.txt"
-#define NUM_CYCLES	1990
-
+#define PATH_ORBIT	"../data/b-boy/orbit.txt"
 
 //
 static void initialize();
@@ -64,36 +57,35 @@ static float z_far = 10000.0f;
 static float view_distance = 500.0f;
 
 //
-enum {
-	GRAPH_VIEW = 0,
-	CYCLE_VIEW
-};
-		
-static unsigned int view_mode = GRAPH_VIEW;
-
-//
 static bool is_lbutton_down = false;
 static bool is_rbutton_down = false;
 static int track_x, track_y;
 
 static unsigned int time_interval = 1;
 static bool is_playing = false;
-static bool is_simplified = false;
 
 //
 static QTrackBall		track_ball;
 
 static SkeletalMotion	motion_data;
 static MotionGraph		motion_graph;
+static OrbitGraph		orbit_graph( &motion_graph );
 static Character		character;
-
-//static std::vector< MotionGraph* >	cycle_list;
-static unsigned int current_cycle = 0;
-static unsigned int current_cycle_size = 0;
-static unsigned int current_index_in_cycle = 0;
 
 extern DrawingTool		drawing_tool;
 
+enum
+{
+	CYCLING_IN_ORBIT = 0,
+	LEAVING_FROM_ORBIT,
+	ENTERING_INTO_ORBIT,
+};
+
+static OrbitGraph::Node*	current_orbit = 0;
+static OrbitGraph::Edge*	current_transit = 0;
+static unsigned int			moving_mode = CYCLING_IN_ORBIT;
+
+static std::vector< float >	orbit_energy_levels;
 
 //
 extern void setupBboySkeleton( Skeleton* s );
@@ -102,14 +94,14 @@ extern void setupCMUSkeleton( Skeleton* s );
 extern void setupBasketballSkeleton( Skeleton* s );
 
 
-void startGraphPlayer( int* argcp, char** argv )
+void startOrbitPlayer( int* argcp, char** argv )
 { 			
 	atexit( finalize );
 
 	glutInit( argcp, argv );
 	glutInitWindowSize( win_width, win_height );
 	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STENCIL );
-    glutCreateWindow( "Graph Player" );
+    glutCreateWindow( "Orbit Player" );
 
 	glewInit();
 
@@ -152,40 +144,67 @@ void startGraphPlayer( int* argcp, char** argv )
 	glutMainLoop();
 } 
 
-inline static bool sort_cycles( MotionGraph* left_cycle, MotionGraph* right_cycle )
+static void calcOrbitEnergyLevels()
 {
-	return (left_cycle->getNumNodes() < right_cycle->getNumNodes() );
+	unsigned int pelvis_index = motion_data.getSkeleton()->getHumanJoint( Human::PELVIS )->getIndex();
+
+	std::vector< OrbitGraph::Node* >* orbits = orbit_graph.getNodeList();
+	std::vector< OrbitGraph::Node* >::iterator itor_o = orbits->begin();
+	while( itor_o != orbits->end() )
+	{
+		OrbitGraph::Node* orbit = ( *itor_o ++ );
+
+		float e = 0.0;
+		unsigned int len = 0;
+
+		std::vector< MotionGraph::Node* >* cycle = orbit->getCycle();
+		std::vector< MotionGraph::Node* >::iterator itor_n = cycle->begin();
+		while( itor_n != cycle->end() )
+		{
+			MotionGraph::Node* node = ( *itor_n ++ );
+			std::pair<unsigned int, unsigned int> segment = node->getSegment( 0 );
+			
+			unsigned int f1 = segment.first;
+			unsigned int fN = segment.second;
+		
+			for( unsigned int f=f1; f <= fN; f++ )
+			{
+				math::vector v = motion_data.getLinearVelocity( f, pelvis_index );
+				float s = v.length();
+				e += s * s;
+			}
+			len += ( fN-f1+1 );
+		}
+		orbit_energy_levels.push_back( e / (float)len );
+	}
 }
 
 void initialize()
 {
 	motion_data.importFromBVH( PATH_BVH );
 	motion_graph.load( PATH_GRAPH );
-	
+	orbit_graph.load( PATH_ORBIT );
+
 	//setupBoxingSkeleton( motion_data.getSkeleton() );
 	setupBboySkeleton( motion_data.getSkeleton() );
 	//setupCMU14Skeleton( motion_data.getSkeleton() );
 	//setupBasketballSkeleton( motion_data.getSkeleton() );
 
-	/*
-	int i;
-	for( i=0; i < NUM_CYCLES; i++ )
-	{
-		char path[ 128 ];
-		sprintf( path, PATH_CYCLES, i );
-
-		MotionGraph* cycle = new MotionGraph;
-		cycle->load( path );
-
-		cycle_list.push_back( cycle );
-	}
-
-	std::sort( cycle_list.begin(), cycle_list.end(), sort_cycles );
-	*/
+	//
+	calcOrbitEnergyLevels();
 
 	//
+	unsigned int num_orbits = orbit_graph.getNumNodes();
+	unsigned int orbit_index = rand() % num_orbits;
+	current_orbit = orbit_graph.getNode( orbit_index );
+	current_transit = 0;
+	moving_mode = CYCLING_IN_ORBIT;
+
+	std::vector< MotionGraph::Node* >* orbit_cycle = current_orbit->getCycle();
+	MotionGraph::Node* start_node = ( *orbit_cycle )[ 0 ];
+
 	character.embody( &motion_data, &motion_graph );
-	character.extendPathRandomly( 1 );
+	character.extendPath( start_node );
 	character.place( 0, 0, 0 );
 
 	//
@@ -200,15 +219,6 @@ void initialize()
 
 void finalize()
 {
-	/*
-	std::vector< MotionGraph* >::iterator itor_c = cycle_list.begin();
-	while( itor_c != cycle_list.end() )
-	{
-		MotionGraph* cycle = ( *itor_c ++ );
-		delete cycle;
-	}
-	cycle_list.clear();
-	*/
 }
 
 void reshape( int w, int h )
@@ -326,16 +336,54 @@ void display()
 
 	drawCharacter();
 
+	//
+	MotionGraph::Node* curr_node = character.getPathNode( 0 );
+
 	char frame_str[128];
-	if( view_mode == GRAPH_VIEW )
-	{
-		sprintf( frame_str, "Graph mode" );
-	}
-	else
-	{
-		sprintf( frame_str, "Cycle mode: %d (%d nodes)", current_cycle, current_cycle_size );
+
+	switch( moving_mode ) {
+	case CYCLING_IN_ORBIT:
+		{
+			unsigned int orbit_index = orbit_graph.getNodeIndex( current_orbit );
+			unsigned int cycle_size = current_orbit->getCycleSize();
+			unsigned int cycle_phase = current_orbit->getPhase( curr_node );
+
+			sprintf( frame_str, "CYCLING IN ORBIT: orbit = %d, phase = %d/%d, energy = %f", orbit_index, cycle_phase, cycle_size, orbit_energy_levels[ orbit_index ] );
+		}
+		break;
+
+	case LEAVING_FROM_ORBIT:
+		{
+			unsigned int orbit_index = orbit_graph.getNodeIndex( current_orbit );
+			unsigned int curr_phase = current_orbit->getPhase( curr_node );
+			unsigned int dest_phase = current_orbit->getPhase( current_transit->startInPath() );
+
+			sprintf( frame_str, "LEAVING FROM ORBIT: orbit = %d, phase = %d -> %d", orbit_index, curr_phase, dest_phase );
+		}
+		break;
+
+	case ENTERING_INTO_ORBIT:
+		{
+			unsigned int from_orbit = orbit_graph.getNodeIndex( current_transit->getFromNode() );
+			unsigned int to_orbit = orbit_graph.getNodeIndex( current_transit->getToNode() );
+			unsigned int path_length = current_transit->getPathLength();
+			unsigned int path_phase = current_transit->getPhase( curr_node );
+
+			sprintf( frame_str, "ENTERING INTO ORBIT: prev orbit = %d, next orbit = %d, phase = %d/%d", from_orbit, to_orbit, path_phase, path_length );
+		}
+		break;
 	}
 	drawing_tool.drawText( 0, 0, GLUT_BITMAP_TIMES_ROMAN_24, frame_str );
+
+	/*
+	unsigned int orbit_index = orbit_graph.getNodeIndex( current_orbit );
+	unsigned int cycle_size = current_orbit->getCycleSize();
+	unsigned int phase = current_orbit->getPhase( current_node );
+
+	char frame_str[128];
+	sprintf( frame_str, "Current orbit: %d, current phase: %d/%d", orbit_index, phase, cycle_size );
+	drawing_tool.drawText( 0, 0, GLUT_BITMAP_TIMES_ROMAN_24, frame_str );
+	*/
 
 	//
 	glutSwapBuffers();
@@ -352,24 +400,50 @@ void idle()
 			unsigned int node_path_len = character.getNodePathLength();
 			if( node_path_len <= 1 )
 			{
-				if( view_mode == GRAPH_VIEW )
-				{
-					character.extendPathRandomly( 1 );
-				}
-				else
-				{
-					std::vector< unsigned int >* cycle = motion_graph.getCycle( current_cycle );
-					if( current_index_in_cycle == current_cycle_size-1 )
+				MotionGraph::Node* curr_node = character.getPathNode( 0 );
+				MotionGraph::Node* next_node = 0;
+
+				switch( moving_mode ) {
+				case CYCLING_IN_ORBIT:
 					{
-						current_index_in_cycle ++;
+						next_node = current_orbit->stepInCycle( curr_node );
 					}
-					else
+					break;
+					
+				case LEAVING_FROM_ORBIT:
 					{
-						current_index_in_cycle = 0;
+						MotionGraph::Node* exit_node = current_transit->startInPath();
+						if( curr_node == exit_node )
+						{
+							moving_mode = ENTERING_INTO_ORBIT;
+							current_orbit = 0;
+							next_node = current_transit->stepInPath( curr_node );
+						}
+						else
+						{
+							next_node = current_orbit->stepInCycle( curr_node );
+						}
 					}
-					MotionGraph::Node* next_node = motion_graph.getNode( ( *cycle )[ current_index_in_cycle ] );
-					character.extendPath( next_node );
+					break;
+
+				case ENTERING_INTO_ORBIT:
+					{
+						MotionGraph::Node* enter_node = current_transit->endInPath();
+						if( curr_node == enter_node )
+						{
+							moving_mode = CYCLING_IN_ORBIT;
+							current_orbit = current_transit->getToNode();
+							current_transit = 0;
+							next_node = current_orbit->stepInCycle( curr_node );
+						}
+						else
+						{
+							next_node = current_transit->stepInPath( curr_node );
+						}
+					}
+					break;
 				}
+				character.extendPath( next_node );
 			}
 			else
 			{
@@ -387,51 +461,41 @@ void timer( int timer_id )
 	glutTimerFunc( time_interval, timer, timer_id );
 }
 
-static void refreshCharacter()
-{
-	/*
-	if( view_mode == GRAPH_VIEW )
-	{
-		character.embody( &motion_data, &motion_graph );
-	}
-	else
-	{
-		character.embody( &motion_data, cycle_list[ current_cycle ] );
-	}
-	*/
-
-	character.embody( &motion_data, &motion_graph );
-
-	if( view_mode == GRAPH_VIEW )
-	{
-		character.extendPathRandomly( 1 );
-	}
-	else
-	{
-		std::vector< unsigned int >* cycle = motion_graph.getCycle( current_cycle );
-		current_cycle_size = (unsigned int)cycle->size();
-		current_index_in_cycle = 0;
-
-		MotionGraph::Node* start_node = motion_graph.getNode( ( *cycle )[ 0 ] );
-		character.extendPath( start_node );
-	}
-	character.place( 0, 0, 0 );
-}
-
 void keyboard( unsigned char key, int x, int y )
 {
 	switch( key ) {
 	case 9:	// tab
 		{
-			if( view_mode == GRAPH_VIEW )
+			if( moving_mode == CYCLING_IN_ORBIT )
 			{
-				view_mode = CYCLE_VIEW;				
+				unsigned int min_dist = (unsigned int)-1;
+				OrbitGraph::Edge* min_edge = 0;
+
+				std::vector< OrbitGraph::Edge* >* next_edges = current_orbit->getNextEdges();
+				std::vector< OrbitGraph::Edge* >::iterator itor_e = next_edges->begin();
+				while( itor_e != next_edges->end() )
+				{
+					OrbitGraph::Edge* edge = ( *itor_e ++ );
+					if( edge->getFromNode() == edge->getToNode() )	continue;
+
+					unsigned int dist = edge->getPathLength();
+					if( dist < min_dist )
+					{
+						min_dist = dist;
+						min_edge = edge;
+					}
+				}
+				current_transit = min_edge;
+				
+				/*
+				std::vector< OrbitGraph::Edge* >* next_edges = current_orbit->getNextEdges();
+				unsigned int num_next_edges = (unsigned int)next_edges->size();
+				unsigned int edge_index = rand() % num_next_edges;
+				current_transit = ( *next_edges )[ edge_index ];
+				*/
+
+				moving_mode = LEAVING_FROM_ORBIT;
 			}
-			else
-			{
-				view_mode = GRAPH_VIEW;
-			}
-			refreshCharacter();
 		}
 		break;
 	case 13:	// enter
@@ -448,40 +512,63 @@ void keyboard( unsigned char key, int x, int y )
 
 void special( int key, int x, int y )
 {
+	if( moving_mode != CYCLING_IN_ORBIT )
+	{
+		return;
+	}
+
 	switch(key){
 		case GLUT_KEY_LEFT:
 		case GLUT_KEY_DOWN:
-			{
-				if( view_mode == CYCLE_VIEW )
-				{
-					unsigned int num_cycles = motion_graph.getNumCycles();	//(unsigned int)cycle_list.size();
-					if( current_cycle == 0 )
-					{
-						current_cycle = num_cycles - 1;
-					}
-					else
-					{
-						current_cycle --;
-					}
-					refreshCharacter();
-				}
-			}
-			break;
 		case GLUT_KEY_RIGHT:
 		case GLUT_KEY_UP:
 			{
-				if( view_mode == CYCLE_VIEW )
+				unsigned int from_node_index = orbit_graph.getNodeIndex( current_orbit );
+				float from_node_energy = orbit_energy_levels[ from_node_index ];
+
+				float max_diff = -FLT_MAX;
+				OrbitGraph::Edge* max_diff_edge = 0;
+
+				std::vector< OrbitGraph::Edge* >* next_edges = current_orbit->getNextEdges();
+				std::vector< OrbitGraph::Edge* >::iterator itor_e = next_edges->begin();
+				while( itor_e != next_edges->end() )
 				{
-					unsigned int num_cycles = motion_graph.getNumCycles();	//(unsigned int)cycle_list.size();
-					if( current_cycle == num_cycles-1 )
+					OrbitGraph::Edge* edge = ( *itor_e ++ );
+					if( edge->getFromNode() == edge->getToNode() )	continue;
+
+					unsigned int edge_len = edge->getPathLength();
+					float effort = (float)( edge_len * edge_len );
+
+					unsigned int to_node_index = orbit_graph.getNodeIndex( edge->getToNode() );
+					float to_node_energy = orbit_energy_levels[ to_node_index ];
+
+					float e_diff = -FLT_MAX;
+
+					if( key == GLUT_KEY_LEFT || key == GLUT_KEY_DOWN )
 					{
-						current_cycle = 0;
+						if( to_node_energy < from_node_energy )
+						{
+							e_diff = ( from_node_energy - to_node_energy ) / effort;
+						}
 					}
 					else
 					{
-						current_cycle ++;
+						if( to_node_energy > from_node_energy )
+						{
+							e_diff = ( to_node_energy - from_node_energy ) / effort;
+						}
 					}
-					refreshCharacter();
+					if( e_diff > max_diff )
+					{
+						max_diff = e_diff;
+						max_diff_edge = edge;
+					}
+				}
+
+				if( max_diff > -FLT_MAX )
+				{
+					current_transit = max_diff_edge;
+					moving_mode = LEAVING_FROM_ORBIT;
 				}
 			}
 			break;

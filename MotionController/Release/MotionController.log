@@ -1,75 +1,86 @@
-﻿Build started 2014-12-10 오전 11:18:28.
-     1>Project "C:\Project\LeapAvatar\MotionController\MotionController.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
+﻿Build started 12/23/2014 1:14:54 AM.
+     1>Project "C:\Mingle\Projects\2015\MotionOrbits\MotionController\MotionController.vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "C:\Mingle\Projects\2015\MotionOrbits\Release\".
+       InitializeBuildStatus:
          Creating "Release\MotionController.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main_graphplay.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\mathclass\addition.cpp ..\mathclass\cross_product.cpp ..\mathclass\dot_product.cpp ..\mathclass\math_def.cpp ..\mathclass\matrix.cpp ..\mathclass\matrixN.cpp ..\mathclass\matrix_mul.cpp ..\mathclass\optimize1.cpp ..\mathclass\optimize2.cpp ..\mathclass\position.cpp ..\mathclass\QmApproximate.cpp ..\mathclass\QmGeodesic.cpp ..\mathclass\quater.cpp ..\mathclass\scalar_div.cpp ..\mathclass\scalar_mul.cpp ..\mathclass\smatrixN.cpp ..\mathclass\subtraction.cpp ..\mathclass\transf.cpp ..\mathclass\transq.cpp ..\mathclass\unit_vector.cpp ..\mathclass\vector.cpp ..\mathclass\vectorN.cpp Character.cpp DrawingTool.cpp GraphSequence.cpp Human.cpp Joint.cpp main.cpp main_bvhplay.cpp main_graphbuild.cpp main_graphplay.cpp main_orbitbuild.cpp main_orbitplay.cpp MotionCluster.cpp MotionData.cpp MotionEdit.cpp MotionGraph.cpp OrbitGraph.cpp PoseConstraint.cpp PoseData.cpp PoseDistance.cpp PoseIK.cpp SkeletalMotion.cpp Skeleton.cpp skeleton_basketball.cpp skeleton_bboy.cpp skeleton_boxing.cpp trackball.cpp
+         addition.cpp
+         cross_product.cpp
+         dot_product.cpp
+         math_def.cpp
+         matrix.cpp
+         matrixN.cpp
+         matrix_mul.cpp
+         optimize1.cpp
+         optimize2.cpp
+         position.cpp
+         QmApproximate.cpp
+         QmGeodesic.cpp
+         quater.cpp
+         scalar_div.cpp
+         scalar_mul.cpp
+         smatrixN.cpp
+         subtraction.cpp
+         transf.cpp
+         transq.cpp
+         unit_vector.cpp
+         Compiling...
+         vector.cpp
+         vectorN.cpp
+         Character.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Character.h(3): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         DrawingTool.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\DrawingTool.h(3): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         GraphSequence.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\GraphSequence.h(3): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         Human.cpp
+         Joint.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Joint.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         main.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\DrawingTool.h(3): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         main_bvhplay.cpp
+     1>main_bvhplay.cpp(7): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         main_graphbuild.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\SkeletalMotion.h(5): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
          main_graphplay.cpp
-     1>c:\project\leapavatar\motioncontroller\MotionGraph.h(264): warning C4482: nonstandard extension used: enum 'MotionGraph::Node::Type' used in qualified name
-     1>c:\project\leapavatar\motioncontroller\MotionGraph.h(186): warning C4482: nonstandard extension used: enum 'MotionGraph::Node::Type' used in qualified name
-     1>c:\project\leapavatar\motioncontroller\MotionGraph.h(198): warning C4482: nonstandard extension used: enum 'MotionGraph::Node::Type' used in qualified name
-     1>main_graphplay.cpp(173): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>main_graphplay.cpp(327): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>main_graphplay.cpp(331): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-       Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Project\LeapAvatar\Release\MotionController.exe" /INCREMENTAL:NO /NOLOGO opengl32.lib glut32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\MotionController.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Project\LeapAvatar\Release\MotionController.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Project\LeapAvatar\Release\MotionController.lib" /MACHINE:X86 Release\addition.obj
-         Release\cross_product.obj
-         Release\dot_product.obj
-         Release\math_def.obj
-         Release\matrix.obj
-         Release\matrixN.obj
-         Release\matrix_mul.obj
-         Release\optimize1.obj
-         Release\optimize2.obj
-         Release\position.obj
-         Release\QmApproximate.obj
-         Release\QmGeodesic.obj
-         Release\quater.obj
-         Release\scalar_div.obj
-         Release\scalar_mul.obj
-         Release\smatrixN.obj
-         Release\subtraction.obj
-         Release\transf.obj
-         Release\transq.obj
-         Release\unit_vector.obj
-         Release\vector.obj
-         Release\vectorN.obj
-         Release\Character.obj
-         Release\DrawingTool.obj
-         Release\GraphSequence.obj
-         Release\Human.obj
-         Release\Joint.obj
-         Release\main.obj
-         Release\main_bvhplay.obj
-         Release\main_graphbuild.obj
-         Release\main_graphplay.obj
-         Release\MotionCluster.obj
-         Release\MotionData.obj
-         Release\MotionEdit.obj
-         Release\MotionGraph.obj
-         Release\PoseConstraint.obj
-         Release\PoseData.obj
-         Release\PoseDistance.obj
-         Release\PoseIK.obj
-         Release\SkeletalMotion.obj
-         Release\Skeleton.obj
-         Release\skeleton_basketball.obj
-         Release\skeleton_bboy.obj
-         Release\skeleton_boxing.obj
-         Release\trackball.obj
-         Generating code
-         Finished generating code
-         MotionController.vcxproj -> C:\Project\LeapAvatar\Release\MotionController.exe
-       Manifest:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Project\LeapAvatar\Release\MotionController.exe;#1" /manifest Release\MotionController.exe.intermediate.manifest
-       FinalizeBuildStatus:
-         Deleting file "Release\MotionController.unsuccessfulbuild".
-         Touching "Release\MotionController.lastbuildstate".
-     1>Done Building Project "C:\Project\LeapAvatar\MotionController\MotionController.vcxproj" (build target(s)).
+     1>main_graphplay.cpp(10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         main_orbitbuild.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\SkeletalMotion.h(5): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         main_orbitplay.cpp
+     1>main_orbitplay.cpp(10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         MotionCluster.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\SkeletalMotion.h(5): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         MotionData.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\MotionData.h(4): fatal error C1083: Cannot open include file: 'mathclass/transq.h': No such file or directory
+         MotionEdit.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\MotionEdit.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         MotionGraph.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\MotionGraph.h(9): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         OrbitGraph.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\MotionGraph.h(9): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         PoseConstraint.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\PoseConstraint.h(4): fatal error C1083: Cannot open include file: 'mathclass/transq.h': No such file or directory
+         PoseData.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\PoseData.h(3): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         Compiling...
+         PoseDistance.cpp
+         PoseIK.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\PoseIK.h(4): fatal error C1083: Cannot open include file: 'mathclass/transq.h': No such file or directory
+         SkeletalMotion.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\SkeletalMotion.h(5): fatal error C1083: Cannot open include file: 'mathclass/position.h': No such file or directory
+         Skeleton.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Joint.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         skeleton_basketball.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Joint.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         skeleton_bboy.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Joint.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         skeleton_boxing.cpp
+     1>c:\mingle\projects\2015\motionorbits\motioncontroller\Joint.h(5): fatal error C1083: Cannot open include file: 'mathclass/vector.h': No such file or directory
+         trackball.cpp
+     1>Done Building Project "C:\Mingle\Projects\2015\MotionOrbits\MotionController\MotionController.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:06.30
+Time Elapsed 00:00:09.61

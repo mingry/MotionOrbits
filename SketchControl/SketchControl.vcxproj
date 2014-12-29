@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B61DCC98-B597-4860-AC65-EDCC96433531}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MotionController</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Project\LeapAvatar;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Project\LeapAvatar;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;glut32.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>FL_DLL;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../;../Include;../MotionController</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>fltkdll.lib;opengl32.lib;glut32.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\FLTKU\Animation.h" />
+    <ClInclude Include="..\FLTKU\AnimationApp.h" />
+    <ClInclude Include="..\FLTKU\AnimationBrowser.h" />
+    <ClInclude Include="..\FLTKU\AnimationBrowserListener.h" />
+    <ClInclude Include="..\FLTKU\AnimationControlBox.h" />
+    <ClInclude Include="..\FLTKU\AnimationController.h" />
+    <ClInclude Include="..\FLTKU\AnimationFrameController.h" />
+    <ClInclude Include="..\FLTKU\AnimationFrameListener.h" />
+    <ClInclude Include="..\FLTKU\AnimationListener.h" />
+    <ClInclude Include="..\FLTKU\AnimationViewer.h" />
+    <ClInclude Include="..\FLTKU\GL2DViewer.h" />
+    <ClInclude Include="..\FLTKU\GL3DViewer.h" />
+    <ClInclude Include="..\FLTKU\Graph1DWin.h" />
+    <ClInclude Include="..\GLUU\Basic.h" />
+    <ClInclude Include="..\GLUU\Camera.h" />
+    <ClInclude Include="..\GLUU\gluu.h" />
+    <ClInclude Include="..\GLUU\Material.h" />
+    <ClInclude Include="..\GLUU\Picking.h" />
+    <ClInclude Include="..\GLUU\Shapes.h" />
+    <ClInclude Include="..\mathclass\math_def.h" />
+    <ClInclude Include="..\mathclass\matrix.h" />
+    <ClInclude Include="..\mathclass\matrixN.h" />
+    <ClInclude Include="..\mathclass\optimize.h" />
+    <ClInclude Include="..\mathclass\position.h" />
+    <ClInclude Include="..\mathclass\QmApproximate.h" />
+    <ClInclude Include="..\mathclass\QmGeodesic.h" />
+    <ClInclude Include="..\mathclass\quater.h" />
+    <ClInclude Include="..\mathclass\smatrixN.h" />
+    <ClInclude Include="..\mathclass\transf.h" />
+    <ClInclude Include="..\mathclass\transq.h" />
+    <ClInclude Include="..\mathclass\unit_vector.h" />
+    <ClInclude Include="..\mathclass\vector.h" />
+    <ClInclude Include="..\mathclass\vectorN.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="DrawingTool.h" />
+    <ClInclude Include="GraphSequence.h" />
+    <ClInclude Include="Human.h" />
+    <ClInclude Include="Joint.h" />
+    <ClInclude Include="MotionCluster.h" />
+    <ClInclude Include="MotionData.h" />
+    <ClInclude Include="MotionEdit.h" />
+    <ClInclude Include="MotionGraph.h" />
+    <ClInclude Include="OrbitGraph.h" />
+    <ClInclude Include="PoseConstraint.h" />
+    <ClInclude Include="PoseData.h" />
+    <ClInclude Include="PoseDistance.h" />
+    <ClInclude Include="PoseIK.h" />
+    <ClInclude Include="SkeletalMotion.h" />
+    <ClInclude Include="Skeleton.h" />
+    <ClInclude Include="trackball.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\FLTKU\Animation.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationApp.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationBrowser.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationControlBox.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationController.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationFrameController.cpp" />
+    <ClCompile Include="..\FLTKU\AnimationViewer.cpp" />
+    <ClCompile Include="..\FLTKU\GL2DViewer.cpp" />
+    <ClCompile Include="..\FLTKU\GL3DViewer.cpp" />
+    <ClCompile Include="..\FLTKU\Graph1DWin.cpp" />
+    <ClCompile Include="..\GLUU\Basic.cpp" />
+    <ClCompile Include="..\GLUU\Camera.cpp" />
+    <ClCompile Include="..\GLUU\gluu.cpp" />
+    <ClCompile Include="..\GLUU\Material.cpp" />
+    <ClCompile Include="..\GLUU\mgluHemisphere.cpp" />
+    <ClCompile Include="..\GLUU\Picking.cpp" />
+    <ClCompile Include="..\GLUU\Shapes.cpp" />
+    <ClCompile Include="..\mathclass\addition.cpp" />
+    <ClCompile Include="..\mathclass\cross_product.cpp" />
+    <ClCompile Include="..\mathclass\dot_product.cpp" />
+    <ClCompile Include="..\mathclass\math_def.cpp" />
+    <ClCompile Include="..\mathclass\matrix.cpp" />
+    <ClCompile Include="..\mathclass\matrixN.cpp" />
+    <ClCompile Include="..\mathclass\matrix_mul.cpp" />
+    <ClCompile Include="..\mathclass\optimize1.cpp" />
+    <ClCompile Include="..\mathclass\optimize2.cpp" />
+    <ClCompile Include="..\mathclass\position.cpp" />
+    <ClCompile Include="..\mathclass\QmApproximate.cpp" />
+    <ClCompile Include="..\mathclass\QmGeodesic.cpp" />
+    <ClCompile Include="..\mathclass\quater.cpp" />
+    <ClCompile Include="..\mathclass\scalar_div.cpp" />
+    <ClCompile Include="..\mathclass\scalar_mul.cpp" />
+    <ClCompile Include="..\mathclass\smatrixN.cpp" />
+    <ClCompile Include="..\mathclass\subtraction.cpp" />
+    <ClCompile Include="..\mathclass\transf.cpp" />
+    <ClCompile Include="..\mathclass\transq.cpp" />
+    <ClCompile Include="..\mathclass\unit_vector.cpp" />
+    <ClCompile Include="..\mathclass\vector.cpp" />
+    <ClCompile Include="..\mathclass\vectorN.cpp" />
+    <ClCompile Include="..\MotionController\Character.cpp" />
+    <ClCompile Include="..\MotionController\DrawingTool.cpp" />
+    <ClCompile Include="..\MotionController\GraphSequence.cpp" />
+    <ClCompile Include="..\MotionController\Human.cpp" />
+    <ClCompile Include="..\MotionController\Joint.cpp" />
+    <ClCompile Include="..\MotionController\main_bvhplay.cpp" />
+    <ClCompile Include="..\MotionController\main_graphbuild.cpp" />
+    <ClCompile Include="..\MotionController\main_graphplay.cpp" />
+    <ClCompile Include="..\MotionController\main_orbitbuild.cpp" />
+    <ClCompile Include="..\MotionController\main_orbitplay.cpp" />
+    <ClCompile Include="..\MotionController\MotionCluster.cpp" />
+    <ClCompile Include="..\MotionController\MotionData.cpp" />
+    <ClCompile Include="..\MotionController\MotionEdit.cpp" />
+    <ClCompile Include="..\MotionController\MotionGraph.cpp" />
+    <ClCompile Include="..\MotionController\OrbitGraph.cpp" />
+    <ClCompile Include="..\MotionController\PoseConstraint.cpp" />
+    <ClCompile Include="..\MotionController\PoseData.cpp" />
+    <ClCompile Include="..\MotionController\PoseDistance.cpp" />
+    <ClCompile Include="..\MotionController\PoseIK.cpp" />
+    <ClCompile Include="..\MotionController\SkeletalMotion.cpp" />
+    <ClCompile Include="..\MotionController\Skeleton.cpp" />
+    <ClCompile Include="..\MotionController\skeleton_basketball.cpp" />
+    <ClCompile Include="..\MotionController\skeleton_bboy.cpp" />
+    <ClCompile Include="..\MotionController\skeleton_boxing.cpp" />
+    <ClCompile Include="..\MotionController\trackball.cpp" />
+    <ClCompile Include="skethchcontrol_main.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

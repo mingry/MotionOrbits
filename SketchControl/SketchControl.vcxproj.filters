@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="mathclass">
+      <UniqueIdentifier>{a573ed96-c9b1-4e89-93ab-b38c0b0ed286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FLTKU">
+      <UniqueIdentifier>{0f19f776-79ef-4d7b-a014-29fd56b8887d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLUU">
+      <UniqueIdentifier>{f01a910b-f06f-4ca6-9bfb-2eff99b61ec6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphSequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionCluster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseDistance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PoseIK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMotion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trackball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\math_def.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\matrix.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\matrixN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\optimize.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\position.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\QmApproximate.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\QmGeodesic.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\quater.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\smatrixN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\transf.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\transq.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\unit_vector.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\vector.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mathclass\vectorN.h">
+      <Filter>mathclass</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbitGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationFrameController.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationFrameListener.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationListener.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationViewer.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\GL2DViewer.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\GL3DViewer.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\Graph1DWin.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\Animation.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationApp.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationBrowser.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationBrowserListener.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationControlBox.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FLTKU\AnimationController.h">
+      <Filter>FLTKU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\gluu.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\Material.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\Picking.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\Shapes.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\Basic.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLUU\Camera.h">
+      <Filter>GLUU</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\mathclass\addition.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\cross_product.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\dot_product.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\math_def.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrix.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrix_mul.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\matrixN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\optimize1.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\optimize2.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\position.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\QmApproximate.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\QmGeodesic.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\quater.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\scalar_div.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\scalar_mul.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\smatrixN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\subtraction.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\transf.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\transq.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\unit_vector.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\vector.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\mathclass\vectorN.cpp">
+      <Filter>mathclass</Filter>
+    </ClCompile>
+    <ClCompile Include="skethchcontrol_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationFrameController.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationViewer.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\GL2DViewer.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\GL3DViewer.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\Graph1DWin.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\Animation.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationApp.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationBrowser.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationControlBox.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FLTKU\AnimationController.cpp">
+      <Filter>FLTKU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\gluu.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\Material.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\mgluHemisphere.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\Picking.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\Shapes.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\Basic.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLUU\Camera.cpp">
+      <Filter>GLUU</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\DrawingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\GraphSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\Human.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\Joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\main_bvhplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\main_graphbuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\main_graphplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\main_orbitbuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\main_orbitplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\MotionCluster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\MotionData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\MotionEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\MotionGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\OrbitGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\PoseConstraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\PoseData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\PoseDistance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\PoseIK.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\SkeletalMotion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\Skeleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\skeleton_basketball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\skeleton_bboy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\skeleton_boxing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MotionController\trackball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

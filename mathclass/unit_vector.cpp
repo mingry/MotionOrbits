@@ -8,9 +8,9 @@ using std::ostream;
 
 using math::unit_vector;
 
-unit_vector math::x_axis( 1.0, 0.0, 0.0 );
-unit_vector math::y_axis( 0.0, 1.0, 0.0 );
-unit_vector math::z_axis( 0.0, 0.0, 1.0 );
+math::unit_vector math::x_axis( 1.0, 0.0, 0.0 );
+math::unit_vector math::y_axis( 0.0, 1.0, 0.0 );
+math::unit_vector math::z_axis( 0.0, 0.0, 1.0 );
 
 unit_vector math::normalize( vector const& a )
 {

@@ -391,11 +391,50 @@ void display()
 
 void idle()
 {
+
+	// Time delay
+	{
+		static bool first = true;
+		static LARGE_INTEGER frequency;        // ticks per second
+		static LARGE_INTEGER last_tick;
+		static double elapsed_time = 0.0;
+		static const double time_delay = 30.0;
+
+		if ( first )
+		{
+			// get ticks per second
+			QueryPerformanceFrequency(&frequency);
+			QueryPerformanceCounter(&last_tick);
+			first = false;
+		}
+
+		LARGE_INTEGER current_tick;
+		QueryPerformanceCounter(&current_tick);
+
+
+		elapsed_time += (current_tick.QuadPart - last_tick.QuadPart) * 1000.0 / frequency.QuadPart;
+		last_tick = current_tick;
+
+
+		// if it has not been tim_delay milli-sec yet, pass the rest of this function
+		if ( elapsed_time < time_delay )
+		{
+			return;
+		}
+
+		// Otherwise reset elapsed_time and keep going on.
+		else
+		{
+			elapsed_time -= time_delay;
+		}
+	}
+
+
 	static unsigned int count = 0;
 
 	if( is_playing )
 	{
-		if( count % 10 == 0 )
+		//if( count % 10 == 0 )
 		{
 			unsigned int node_path_len = character.getNodePathLength();
 			if( node_path_len <= 1 )
@@ -452,7 +491,7 @@ void idle()
 
 			glutPostRedisplay();
 		}
-		count ++;
+		//count ++;
 	}
 }
 

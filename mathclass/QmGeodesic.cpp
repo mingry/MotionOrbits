@@ -77,7 +77,7 @@ QmGeodesic::farthest( quater const& q )
 transf
 PlaneProject( transf const& t )
 {
-	QmGeodesic g( quater(1,0,0,0), y_axis );
+	QmGeodesic g( quater(1,0,0,0), math::y_axis );
 	vector v = t.translation();
 
 	return transf( g.nearest( t.getRotation() ),

@@ -213,8 +213,8 @@ vector math::Matrix2EulerAngle( const matrix& m )
 
 matrix math::EulerAngle2Matrix( const vector& v )
 {
-    matrix m = rotation( v.x(), x_axis ) *
-               rotation( v.y(), y_axis ) *
+    matrix m = rotation( v.x(), math::x_axis ) *
+               rotation( v.y(), math::y_axis ) *
                rotation( v.z(), z_axis );
 
     return m;

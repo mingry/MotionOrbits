@@ -84,8 +84,8 @@ transf math::coordinate_transf( position const& new_o,
                           unit_vector const& new_y )
 {
     position o( 0.0, 0.0, 0.0 );
-    vector x_axis( 1.0, 0.0, 0.0 );
-    vector y_axis( 0.0, 1.0, 0.0 );
+    math::vector x_axis( 1.0, 0.0, 0.0 );
+    math::vector y_axis( 0.0, 1.0, 0.0 );
     vector z_axis( 0.0, 0.0, 1.0 );
 
     transf t1 = translate_transf( o - new_o );
@@ -93,17 +93,17 @@ transf math::coordinate_transf( position const& new_o,
     vector v1 = new_x;
     v1.set_x( 0.0 );
     double theta = ACOS( (v1 % z_axis) / len(v1) );
-    transf t2 = rotate_transf( theta, x_axis );
+    transf t2 = rotate_transf( theta, math::x_axis );
 
     vector v2 = new_x;
     vector v3 = v2 * t2 * t1;
-    theta = ACOS( (v3 % x_axis) / len(v3) );
-    transf t3 = rotate_transf( theta, y_axis );
+    theta = ACOS( (v3 % math::x_axis) / len(v3) );
+    transf t3 = rotate_transf( theta, math::y_axis );
 
     vector v4 = new_y;
     vector v5 = v4 * t3 * t2 * t1;
-    theta = ACOS( (v5 % y_axis) / len(v5) );
-    transf t4 = rotate_transf( theta, x_axis );
+    theta = ACOS( (v5 % math::y_axis) / len(v5) );
+    transf t4 = rotate_transf( theta, math::x_axis );
 
     return t4 * t3 * t2 * t1;
 }

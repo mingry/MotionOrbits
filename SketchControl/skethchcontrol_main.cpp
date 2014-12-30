@@ -13,7 +13,7 @@
 #include "MotionGraph.h"
 #include "OrbitGraph.h"
 #include "Character.h"
-
+#include "StickFigureSearch.h"
 
 
 DrawingTool drawing_tool;
@@ -152,11 +152,14 @@ private:
 int main()
 {
 	InitializeMotionGraph();
+	InitializeStickFigureSearch("data/b-boy/B_boy.bvh", "../data/b-boy/B_boy_joint_map.txt");
 
 	mg::AnimationApp *app = new mg::AnimationApp;
 
 	app->end();
 	app->show();
+
+
 
 
 	for ( int i=0; i<g_orbit_graph.getNumNodes(); i++ )
@@ -169,5 +172,6 @@ int main()
 		app->ani_browser_->AddAnimation(ani);
 	}
 
+	
 	return Fl::run();
 }

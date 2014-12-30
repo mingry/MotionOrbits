@@ -1,4 +1,4 @@
 #pragma once
 
 
-void InitializeStickFigureSearch(const char *bvh_file, const char *joint_map_file);
+void __declspec(dllimport) InitializeStickFigureSearch(const char *bvh_file, const char *joint_map_file);

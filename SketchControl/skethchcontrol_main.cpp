@@ -151,15 +151,14 @@ private:
 
 int main()
 {
+
+
 	InitializeMotionGraph();
-	InitializeStickFigureSearch("data/b-boy/B_boy.bvh", "../data/b-boy/B_boy_joint_map.txt");
 
 	mg::AnimationApp *app = new mg::AnimationApp;
 
 	app->end();
 	app->show();
-
-
 
 
 	for ( int i=0; i<g_orbit_graph.getNumNodes(); i++ )
@@ -172,6 +171,7 @@ int main()
 		app->ani_browser_->AddAnimation(ani);
 	}
 
+	InitializeStickFigureSearch("../data/b-boy/B_boy.bvh", "../data/b-boy/B_boy_joint_map.txt");
 	
 	return Fl::run();
 }

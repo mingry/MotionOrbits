@@ -16,6 +16,8 @@
 #include "StickFigureSearch.h"
 
 
+
+
 DrawingTool drawing_tool;
 
 
@@ -26,152 +28,194 @@ DrawingTool drawing_tool;
 #define PATH_GRAPH	"../data/b-boy/graph.txt"
 #define PATH_ORBIT	"../data/b-boy/orbit.txt"
 
-static SkeletalMotion	g_motion_data;
-static MotionGraph	g_motion_graph;
-static OrbitGraph		g_orbit_graph( &g_motion_graph );
 
 extern void setupBboySkeleton( Skeleton* s );
 extern void setupBoxingSkeleton( Skeleton* s );
 extern void setupCMUSkeleton( Skeleton* s );
 extern void setupBasketballSkeleton( Skeleton* s );
 
-void InitializeMotionGraph()
+
+class SketchControledAnimation : public mg::Animation
 {
-	g_motion_data.importFromBVH( PATH_BVH );
-	g_motion_graph.load( PATH_GRAPH );
-	g_orbit_graph.load( PATH_ORBIT );
 
-	//setupBoxingSkeleton( motion_data.getSkeleton() );
-	setupBboySkeleton( g_motion_data.getSkeleton() );
-	//setupCMU14Skeleton( motion_data.getSkeleton() );
-	//setupBasketballSkeleton( motion_data.getSkeleton() );
-
-
-	
-	
-}
-
-
-class CycleAnimation : public mg::Animation
-{
 public:
-	CycleAnimation(OrbitGraph::Node *cycle)
+	enum
 	{
-		// The input parameter cycle contains a list of a motion graph nodes, which is a sequence of cyclic motion. 
-		nodes_in_cycle_ = cycle;
-
-		// We need an instance of Character class, to synthesis a contineuous motion sequence. 
-		// Becase Character class has the functions for traveling between nodes in a motion graph while connecting the postures in each node as a continues motion.
-		Character character;
-		character.embody( &g_motion_data, &g_motion_graph );
-		
-		// Set the nodes of the cyclic motion segemnt in the character_
-		for ( unsigned int i=0; i<nodes_in_cycle_->getCycleSize(); i++ )
-		{
-			character.extendPath( (*nodes_in_cycle_->getCycle())[i] );
-		}
-		character.extendPath( nodes_in_cycle_->getCycle()->front() );
-
-		// Calcule the number of frames of the cyclic motion
-		num_frames_ = 0;
-		for ( unsigned int i=0; i<character.getNodePathLength(); i++ )
-		{
-			if ( character.getPathNode(i)->getNumSegments() > 0 )
-				if ( i==character.getNodePathLength()-1 )
-					num_frames_ += 1;//character.getPathNode(i)->getSegment(0).second - character.getPathNode(i)->getSegment(0).first + 1;
-				else
-					num_frames_ += character.getPathNode(i)->getSegment(0).second - character.getPathNode(i)->getSegment(0).first + 1;
-		}
+		CYCLING_IN_ORBIT = 0,
+		LEAVING_FROM_ORBIT,
+		ENTERING_INTO_ORBIT,
+	};
 
 
-		// Set the starting position as the origin of the given coordinate
-		character.place( 0, 0, 0 );
+	SketchControledAnimation()
+	{
+		motion_data_ = new SkeletalMotion;
+		motion_graph_ = new MotionGraph;
+		character_ = new Character;
 
-		// The member variable, cycle_motion_, is an instance of MotionData class.
-		// We will synthesis a cyclic motion data of 'cycle'
-		cyclic_motion_.initialize(g_motion_data.getSkeleton(), num_frames_);
+		motion_data_->importFromBVH( PATH_BVH );
+		motion_graph_->load( PATH_GRAPH );
 
-		for ( unsigned int i=0; i< num_frames_; i++ )
-		{
-			character.update();
-			PoseData pose;
-			pose.initialize( g_motion_data.getNumJoints() );
+		//setupBoxingSkeleton( motion_data.getSkeleton() );
+		setupBboySkeleton( motion_data_->getSkeleton() );
+		//setupCMU14Skeleton( motion_data.getSkeleton() );
+		//setupBasketballSkeleton( motion_data.getSkeleton() );
 
-			if ( character.isInBlend() )
-			{
-				pose.copy( character.getBlendMotion()->getPoseData( character.getBlendFrame() ) );
-			}
-			else
-			{
-				pose.copy( character.getSkeletalMotion()->getPoseData( character.getFrame() ) );
-			}
-			pose.transform( character.getTransform() );
+		//
 
-			cyclic_motion_.setPoseData(i, &pose);
-		}
+		MotionGraph::Node* start_node = motion_graph_->getNode(0);
+		character_->embody( motion_data_, motion_graph_ );
+		character_->extendPath( start_node );
+		character_->place( 0, 0, 0 );
 
+		target_node_ = 0;
 
+		// InitializeStickFigureSearch( PATH_BVH, "../data/b-boy/B_boy_joint_map.txt");
+		InitializeStickFigureSearch( "../data/b-boy/B_boy_s.bvh", "../data/b-boy/B_boy_joint_map.txt");
+		AddStickFigureSearchCB( StaticStickFigureSearchListener, this );
 	};
 
 	void DrawCharacter()
 	{
 		float thickness = 5.0f;
 
-		drawing_tool.setColor( 1, 0.4, 0, 1 );
-		drawing_tool.drawPose( &cyclic_motion_, this->cur_frame(), thickness);
+		if( character_->isInBlend() )
+		{
+			SkeletalMotion* blend_motion = character_->getBlendMotion();
+			math::transq T = character_->getTransform();
+			unsigned int f = character_->getBlendFrame();
+
+			drawing_tool.setColor( 0, 0.4, 1, 1 );
+			drawing_tool.drawPose( blend_motion, f, thickness, T );
+		}
+		else
+		{
+			SkeletalMotion* skeletal_motion = character_->getSkeletalMotion();
+			math::transq T = character_->getTransform();
+			unsigned int f = character_->getFrame();
+
+			drawing_tool.setColor( 1, 0.4, 0, 1 );
+			drawing_tool.drawPose( skeletal_motion, f, thickness, T );
+		}
 	}
 
 	virtual void FrameChanged(int frame)
 	{
 		mg::Animation::FrameChanged(frame);
+		
+		unsigned int node_path_len = character_->getNodePathLength();
+		if( node_path_len <= 1 )
+		{
+			MotionGraph::Node* curr_node = character_->getPathNode( 0 );
+			MotionGraph::Node* next_node = 0;
+
+			if ( target_node_ == 0 )
+			{
+				next_node = curr_node->getNextEdges()->front()->getToNode();
+			}
+			else 
+			{
+				std::deque<MotionGraph::Node*> path;
+				motion_graph_->findPath(curr_node, target_node_, &path);
+				if ( path.size() > 0 )
+				{
+					next_node = path.front();
+
+				}
+				else
+				{
+					next_node = curr_node->getNextEdges()->front()->getToNode();
+				}
+			}
+
+			character_->extendPath( next_node );
+		}
+		else
+		{
+			character_->update();
+		}
+
 	}
 
-	virtual int CountFrames() const
+	/*virtual int CountFrames() const
 	{
 		return (int)num_frames_;
-	}
+	}*/
 
 	virtual void Draw(int frame)
 	{
 
-		if ( nodes_in_cycle_ == 0 ) return;
-
 		DrawCharacter();
 	}
 
-private:
-	SkeletalMotion cyclic_motion_;
-	
-	OrbitGraph::Node *nodes_in_cycle_;
-	int num_frames_;
+
+	virtual int HandleFLTK(mg::AnimationViewer *w, int event) 
+	{ 
+		if ( event == FL_SHORTCUT && Fl::event_key() == '1')
+		{
+			return 1;
+		}
+
+		return mg::Animation::HandleFLTK(w, event); 
+	}
+
+
+	static void StaticStickFigureSearchListener(int start_frame, int frame_len, void *data)
+	{
+		((SketchControledAnimation*)data)->StickFigureSearchListener(start_frame, frame_len);
+	}
+
+	void StickFigureSearchListener(int searched_start_frame, int searched_frame_len)
+	{
+		if ( searched_start_frame < 0 || searched_frame_len <= 0 )
+		{
+			return;
+		}
+
+		target_node_ = 0;
+
+		// We will check every node in motion_graph_ list
+		for ( unsigned int i=0; i<motion_graph_->getNodeList()->size(); i++ )
+		{
+			MotionGraph::Node *node = motion_graph_->getNode(i);
+			if ( searched_start_frame >= (int)node->getSegment(0).first
+				&& searched_start_frame <= (int)node->getSegment(0).second )
+			{
+				target_node_ = node;
+				break;
+			}
+		}
+
+	}
+
+protected:
+	SkeletalMotion	*motion_data_;
+	MotionGraph		*motion_graph_;
+	Character		*character_;
+
+	MotionGraph::Node *target_node_;
 };
-
-
 
 
 int main()
 {
 
-
-	InitializeMotionGraph();
-
 	mg::AnimationApp *app = new mg::AnimationApp;
 
 	app->end();
 	app->show();
+	app->ani_frame_control_->play_mode(mg::AnimationFrameController::TO_INFINITE);
 
+	SketchControledAnimation *ani = new SketchControledAnimation;
+	ani->name("ani");
+	app->ani_browser_->AddAnimation(ani);
+	
 
-	for ( int i=0; i<g_orbit_graph.getNumNodes(); i++ )
-	{
-		CycleAnimation *ani = new CycleAnimation(g_orbit_graph.getNode(i));
-		char ani_name[256];
-		sprintf_s(ani_name, "Cycle_%d", i);
-		ani->name(ani_name);
-
-		app->ani_browser_->AddAnimation(ani);
-	}
-
-	InitializeStickFigureSearch("../data/b-boy/B_boy.bvh", "../data/b-boy/B_boy_joint_map.txt");
+	// InitializeStickFigureSearch("../data/b-boy/B_boy.bvh", "../data/b-boy/B_boy_joint_map.txt");
 	
 	return Fl::run();
 }
+
+
+
+
